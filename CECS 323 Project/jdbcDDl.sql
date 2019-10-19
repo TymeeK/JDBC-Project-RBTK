@@ -2,7 +2,7 @@
 CREATE TABLE WritingGroups(
   group_name    VARCHAR(50) NOT NULL, 
   head_writer   VARCHAR(50) NOT NULL,
-  year_formed   YEAR,
+  year_formed   SMALLINT,
   subject       VARCHAR(50),
   CONSTRAINT writing_groups_pk PRIMARY KEY(group_name),
   CONSTRAINT writing_groups_uk UNIQUE (group_name, head_writer)
