@@ -1,29 +1,30 @@
 /* This table holds information related to different writing groups */
+--
 CREATE TABLE WritingGroups(
-  group_name    VARCHAR(50) NOT NULL, 
-  head_writer   VARCHAR(50) NOT NULL,
-  year_formed   SMALLINT,
-  subject       VARCHAR(50),
+  group_name    VARCHAR(50) NOT NULL, --The name of the writing group
+  head_writer   VARCHAR(50) NOT NULL, --The person that is the main writer for the group
+  year_formed   SMALLINT,             --The year that this writing group was made
+  subject       VARCHAR(50),          --The topics that the writing group mainly focuses on
   CONSTRAINT writing_groups_pk PRIMARY KEY(group_name),
   CONSTRAINT writing_groups_uk UNIQUE (group_name, head_writer)
 );
 
 /* This table holds information related to different publishers */
 CREATE TABLE Publishers(
-  publisher_name    VARCHAR(50) NOT NULL,
-  publisher_address VARCHAR(50),
-  publisher_phone   VARCHAR(20),
-  publisher_email   VARCHAR(50),
+  publisher_name    VARCHAR(50) NOT NULL, --The name of the person who publishes books
+  publisher_address VARCHAR(50),          --The location of the publisher
+  publisher_phone   VARCHAR(20),          --The phone number that is associated with the publisher
+  publisher_email   VARCHAR(50),          --The email that the publisher uses for main form of contact online
   CONSTRAINT publishers_fk PRIMARY KEY(publisher_name)
 );
 
 /* This table holds information related to different books */
 CREATE TABLE Books(
-  group_name        VARCHAR(50) NOT NULL,
-  book_title        VARCHAR(50) NOT NULL,
-  publisher_name    VARCHAR(50) NOT NULL,
-  year_published    SMALLINT, 
-  number_pages      SMALLINT,
+  group_name        VARCHAR(50) NOT NULL, --The name of the writing group
+  book_title        VARCHAR(50) NOT NULL, --The name of the book 
+  publisher_name    VARCHAR(50) NOT NULL, --The name of the publisher that publishes this book
+  year_published    SMALLINT,             --The year that the book is published
+  number_pages      SMALLINT,             --The amount of pages that the book has
   CONSTRAINT books_pk PRIMARY KEY(group_name, book_title), 
   CONSTRAINT books_uk UNIQUE(book_title, publisher_name),
   CONSTRAINT books_writing_groups_fk01 FOREIGN KEY(group_name) 
