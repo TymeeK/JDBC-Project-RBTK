@@ -349,7 +349,9 @@ public class CECS323JavaTermProject {
                 else if (userChoice == 7) {
                     //String groupName, String bookTitle, String publisherName, int yearPublished, int numPages
                     System.out.println("What is the book title?");
+                    in.nextLine();
                     userInput = in.nextLine();
+                    
                     System.out.println(userInput);
                     System.out.println("What is the group name?");
                     String groupName = in.nextLine();
@@ -360,9 +362,13 @@ public class CECS323JavaTermProject {
                     System.out.println("What is the year published?");
                     int yearPublished = in.nextInt();
                     
+                    System.out.println("How many pages does the book have?");
+                    int pages = in.nextInt();
+                    
+                    addBook(groupName, userInput, publisherName, yearPublished, pages);
                 }
             }
-//            addBook("Write On", "bt", "HarperCollins", 1999, 420);
+            addBook("Write On", "bt", "HarperCollins", 1999, 420);
 //            addPublisher("Long Beach Publisher", "123 Seasame St. Long Beach, CA 90804", "562-210-2345", "lbpublish@gmail.com", "Hachette Livre");
 //            removeBook("Science Lovers", "Hypothesis");
             conn.close();
