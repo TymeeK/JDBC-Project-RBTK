@@ -315,23 +315,23 @@ public class CECS323JavaTermProject {
                 userChoice = in.nextInt();
                 
                 switch (userChoice) {
-                    case 1:
+                    case 1: //doesn't need a check
                         getAllWritingGroups();
                         break;
-                    case 2:
+                    case 2: //doesn't need a check
                         System.out.println("Which writing group do you want to find?");
                         userInput = scanner.nextLine();
                         getWritingGroup(userInput);
                         break;
-                    case 3:
+                    case 3: //doesn't need a check
                         getAllPublishers();
                         break;
-                    case 4:
+                    case 4: //doesn't need a check
                         System.out.println("Which publisher do you want to find?");
                         userInput = scanner.nextLine();
                         getPublisher(userInput);
                         break;
-                    case 5:
+                    case 5: //doesn't need a check
                         getAllBooks();
                         break;
                     case 6:
@@ -347,16 +347,43 @@ public class CECS323JavaTermProject {
                         System.out.println("What is the book title?");
                         in.nextLine();
                         userInput = in.nextLine();
-                        System.out.println(userInput);
+                        while (userInput.isEmpty()) {
+                            System.out.println("Please enter a book title");
+                            userInput = in.nextLine();
+                        }
+                        
+                        
                         System.out.println("What is the group name?");
                         String groupName = in.nextLine();
+                        
+                        while (groupName.isEmpty()) {
+                            System.out.println("Please enter a group name");
+                            groupName = in.nextLine();
+                        }
+                        
                         System.out.println("What is the publisher name?");
                         String publisherName = in.nextLine();
+                        while (publisherName.isEmpty()) {
+                            System.out.println("Please enter a publisher name");
+                            publisherName = in.nextLine();
+                        }
+                        
                         System.out.println("What is the year published?");
-                        int yearPublished = in.nextInt();
+                        String yearPublished = in.nextLine();
+                        while (yearPublished.isEmpty() || !yearPublished.matches("[0-9]+")) {
+                            System.out.println("Please enter a year that is valid");
+                            yearPublished = in.nextLine();
+                        }
+                        int newYear = Integer.parseInt(yearPublished);
+                        
                         System.out.println("How many pages does the book have?");
-                        int pages = in.nextInt();
-                        addBook(groupName, userInput, publisherName, yearPublished, pages);
+                        String pages = in.nextLine();
+                        while (pages.isEmpty() || !yearPublished.matches("[0-9]+")) {
+                            System.out.println("Please enter a valid amount of pages");
+                            pages = in.nextLine();
+                        }
+                        int newPages = Integer.parseInt(pages);
+                        addBook(groupName, userInput, publisherName, newYear, newPages);
                         break;
                         }
                     case 8:
@@ -364,11 +391,12 @@ public class CECS323JavaTermProject {
                         //String publisherName, String publisherAddress, String publisherPhone, String publisherEmail, String publisherReplace
                         System.out.println("What is the publisher name?");
                         in.nextLine();
+                        
                         String publisherName = in.nextLine();
                         
                         System.out.println("What is the publisher address?");
                         String publisherAddress = in.nextLine();
-                        
+                       
                         System.out.println("What is the publisher's phone?");
                         String publisherPhone = in.nextLine();
                         
