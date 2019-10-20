@@ -287,6 +287,7 @@ public class CECS323JavaTermProject {
         DBNAME = in.nextLine();
         //Constructing the database URL connection string
         DB_URL = "jdbc:derby://localhost:1527/" + DBNAME;
+        Scanner scanner = new Scanner(System.in);
         
         try {
             //STEP 2: Register JDBC driver
@@ -295,7 +296,11 @@ public class CECS323JavaTermProject {
             //STEP 3: Open a connection
             System.out.println("Connecting to database...");
             conn = DriverManager.getConnection(DB_URL);
-
+            int userChoice = 0;
+            String userInput = "";
+            while (userChoice != 10) {
+                
+            }
 //            addBook("Write On", "bt", "HarperCollins", 1999, 420);
 //            addPublisher("Long Beach Publisher", "123 Seasame St. Long Beach, CA 90804", "562-210-2345", "lbpublish@gmail.com", "Hachette Livre");
 //            removeBook("Science Lovers", "Hypothesis");
