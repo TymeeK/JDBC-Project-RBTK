@@ -314,61 +314,86 @@ public class CECS323JavaTermProject {
                 menu();
                 userChoice = in.nextInt();
                 
-                if (userChoice == 1) {
-                    getAllWritingGroups();
-                }
-                
-                else if (userChoice == 2) {
-                    System.out.println("Which writing group do you want to find?");
-                    userInput = scanner.nextLine();
-                    getWritingGroup(userInput);
-                }
-                
-                else if (userChoice == 3) {
-                    getAllPublishers();
-                }
-                
-                else if (userChoice == 4) {
-                    System.out.println("Which publisher do you want to find?");
-                    userInput = scanner.nextLine();
-                    getPublisher(userInput);
-                }
-                
-                else if (userChoice == 5) {
-                    getAllBooks();
-                }
-                
-                else if (userChoice == 6) {
-                    System.out.println("Which book do you want to find?");
-                    userInput = scanner.nextLine();
-                    System.out.println("Which group does this book belong to?");
-                    String group = scanner.nextLine();
-                    getBook(group, userInput);
-                }
-                
-                else if (userChoice == 7) {
-                    //String groupName, String bookTitle, String publisherName, int yearPublished, int numPages
-                    System.out.println("What is the book title?");
-                    in.nextLine();
-                    userInput = in.nextLine();
-                    
-                    System.out.println(userInput);
-                    System.out.println("What is the group name?");
-                    String groupName = in.nextLine();
-                    
-                    System.out.println("What is the publisher name?");
-                    String publisherName = in.nextLine();
-                    
-                    System.out.println("What is the year published?");
-                    int yearPublished = in.nextInt();
-                    
-                    System.out.println("How many pages does the book have?");
-                    int pages = in.nextInt();
-                    
-                    addBook(groupName, userInput, publisherName, yearPublished, pages);
+                switch (userChoice) {
+                    case 1:
+                        getAllWritingGroups();
+                        break;
+                    case 2:
+                        System.out.println("Which writing group do you want to find?");
+                        userInput = scanner.nextLine();
+                        getWritingGroup(userInput);
+                        break;
+                    case 3:
+                        getAllPublishers();
+                        break;
+                    case 4:
+                        System.out.println("Which publisher do you want to find?");
+                        userInput = scanner.nextLine();
+                        getPublisher(userInput);
+                        break;
+                    case 5:
+                        getAllBooks();
+                        break;
+                    case 6:
+                        System.out.println("Which book do you want to find?");
+                        userInput = scanner.nextLine();
+                        System.out.println("Which group does this book belong to?");
+                        String group = scanner.nextLine();
+                        getBook(group, userInput);
+                        break;
+                    case 7:
+                        {
+                        //String groupName, String bookTitle, String publisherName, int yearPublished, int numPages
+                        System.out.println("What is the book title?");
+                        in.nextLine();
+                        userInput = in.nextLine();
+                        System.out.println(userInput);
+                        System.out.println("What is the group name?");
+                        String groupName = in.nextLine();
+                        System.out.println("What is the publisher name?");
+                        String publisherName = in.nextLine();
+                        System.out.println("What is the year published?");
+                        int yearPublished = in.nextInt();
+                        System.out.println("How many pages does the book have?");
+                        int pages = in.nextInt();
+                        addBook(groupName, userInput, publisherName, yearPublished, pages);
+                        break;
+                        }
+                    case 8:
+                        {
+                        //String publisherName, String publisherAddress, String publisherPhone, String publisherEmail, String publisherReplace
+                        System.out.println("What is the publisher name?");
+                        in.nextLine();
+                        String publisherName = in.nextLine();
+                        
+                        System.out.println("What is the publisher address?");
+                        String publisherAddress = in.nextLine();
+                        
+                        System.out.println("What is the publisher's phone?");
+                        String publisherPhone = in.nextLine();
+                        
+                        System.out.println("What is the publisher's email?");
+                        String publisherEmail = in.nextLine();
+                        
+                        System.out.println("What publisher do you want to replace?");
+                        String publisherReplace = in.nextLine();
+                        addPublisher(publisherName, publisherAddress, publisherPhone, publisherEmail, publisherReplace);
+                        break;
+                        }
+                    case 9:
+                        {
+                        System.out.println("What is the name of the book?");
+                        in.nextLine();
+                        String bookTitle = in.nextLine();
+                        System.out.println("What is the name of the group?");
+                        String groupName = in.nextLine();
+                        removeBook(groupName, bookTitle);
+                        break;
+                        }
+                   
                 }
             }
-            addBook("Write On", "bt", "HarperCollins", 1999, 420);
+            //addBook("Write On", "bt", "HarperCollins", 1999, 420);
 //            addPublisher("Long Beach Publisher", "123 Seasame St. Long Beach, CA 90804", "562-210-2345", "lbpublish@gmail.com", "Hachette Livre");
 //            removeBook("Science Lovers", "Hypothesis");
             conn.close();
