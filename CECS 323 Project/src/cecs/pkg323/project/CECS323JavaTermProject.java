@@ -275,7 +275,19 @@ public class CECS323JavaTermProject {
             e.printStackTrace();
         }
     }
-    
+    public static void menu() {
+        System.out.println("What would you like to do? (Enter the number for each option)");
+        System.out.println("1. List all writing groups");
+        System.out.println("2. List data for a specific writing group");
+        System.out.println("3. List all publishers");
+        System.out.println("4. List a specific publisher");
+        System.out.println("5. List all books");
+        System.out.println("6. List a specific book");
+        System.out.println("7. Add a book");
+        System.out.println("8. Add a publisher");
+        System.out.println("9. Remove a book");
+        System.out.println("10. Quit");
+    }
     
     
     public static void main(String[] args) {
@@ -299,7 +311,56 @@ public class CECS323JavaTermProject {
             int userChoice = 0;
             String userInput = "";
             while (userChoice != 10) {
+                menu();
+                userChoice = in.nextInt();
                 
+                if (userChoice == 1) {
+                    getAllWritingGroups();
+                }
+                
+                else if (userChoice == 2) {
+                    System.out.println("Which writing group do you want to find?");
+                    userInput = scanner.nextLine();
+                    getWritingGroup(userInput);
+                }
+                
+                else if (userChoice == 3) {
+                    getAllPublishers();
+                }
+                
+                else if (userChoice == 4) {
+                    System.out.println("Which publisher do you want to find?");
+                    userInput = scanner.nextLine();
+                    getPublisher(userInput);
+                }
+                
+                else if (userChoice == 5) {
+                    getAllBooks();
+                }
+                
+                else if (userChoice == 6) {
+                    System.out.println("Which book do you want to find?");
+                    userInput = scanner.nextLine();
+                    System.out.println("Which group does this book belong to?");
+                    String group = scanner.nextLine();
+                    getBook(group, userInput);
+                }
+                
+                else if (userChoice == 7) {
+                    //String groupName, String bookTitle, String publisherName, int yearPublished, int numPages
+                    System.out.println("What is the book title?");
+                    userInput = in.nextLine();
+                    System.out.println(userInput);
+                    System.out.println("What is the group name?");
+                    String groupName = in.nextLine();
+                    
+                    System.out.println("What is the publisher name?");
+                    String publisherName = in.nextLine();
+                    
+                    System.out.println("What is the year published?");
+                    int yearPublished = in.nextInt();
+                    
+                }
             }
 //            addBook("Write On", "bt", "HarperCollins", 1999, 420);
 //            addPublisher("Long Beach Publisher", "123 Seasame St. Long Beach, CA 90804", "562-210-2345", "lbpublish@gmail.com", "Hachette Livre");
