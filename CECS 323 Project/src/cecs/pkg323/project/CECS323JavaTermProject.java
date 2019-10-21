@@ -183,15 +183,38 @@ public class CECS323JavaTermProject {
     //We need to add checks into the addBook section
     public static void addBook(String groupName, String bookTitle, String publisherName, int yearPublished, int numPages){
         try{
+            //Checking for book and group
             String stmt0 = "SELECT book_title, group_name FROM Books WHERE book_title = ? AND group_name = ?";
             PreparedStatement psmt0 = conn.prepareStatement(stmt0);
             psmt0.setString(1, bookTitle);
             psmt0.setString(2, groupName);
             ResultSet rs0 = psmt0.executeQuery();
             if (rs0.next()) {
-                System.out.println("This book and group name already exists!");
+                System.out.println("This book and group name already exists! \nGoing back to the main menu");
                 return;
             }
+            
+            //I can't get this to work
+            //Checking if the group name exists
+            String checkStatement1 = "SELECT group_name FROM WritingGroups WHERE group_name = ?";
+            PreparedStatement pstmt4 = conn.prepareStatement(checkStatement1);
+            pstmt4.setString(1, groupName);
+            ResultSet rs2 = pstmt4.executeQuery();
+            if (!rs2.next()) {
+                System.out.println("This group name does not exist! \nGoing back to the main menu");
+                return;
+            }
+            
+            //Checking if the publisher exists or not 
+            String checkStatement = "SELECT publisher_name FROM Publishers WHERE publisher_name = ?";
+            PreparedStatement pstmt3 = conn.prepareStatement(checkStatement);
+            pstmt3.setString(1, publisherName);
+            ResultSet rs1 = pstmt3.executeQuery();
+            if (!rs1.next()) {
+                System.out.println("This publisher does not exist! \nGoing back to the main menu");
+                return;
+            }
+       
             
             String stmt = "INSERT INTO Books (group_name, book_title, publisher_name, year_published, number_pages) VALUES (?,?,?,?,?)";
             PreparedStatement pstmt = conn.prepareStatement(stmt);
