@@ -2,6 +2,7 @@ package cecs.pkg323.project;
 
 import java.sql.*;
 import java.util.Scanner;
+import java.util.InputMismatchException;
 
 /**
  * @author Rachel Bright
@@ -57,6 +58,16 @@ public class CECS323JavaTermProject {
     
     public static void getWritingGroup(String group){
         try{
+            //This is checking if the writing group exists
+            String checkStatement = "SELECT group_name FROM WritingGroups WHERE group_name = ?";
+            PreparedStatement pcstmt = conn.prepareStatement(checkStatement);
+            pcstmt.setString(1, group);
+            ResultSet rs1 = pcstmt.executeQuery();
+            if (!rs1.next()) {
+                System.out.println("This writing group does not exist! \nReturning to main menu");
+                return;
+            }
+            
             String stmt = "SELECT group_name, head_writer, year_formed, subject FROM WritingGroups WHERE group_name = ? ORDER BY group_name";
             PreparedStatement pstmt = conn.prepareStatement(stmt);
             pstmt.setString(1, group);
@@ -109,6 +120,7 @@ public class CECS323JavaTermProject {
     
     public static void getPublisher(String publisher){
         try{
+            
             String stmt = "SELECT publisher_name, publisher_address, publisher_phone, publisher_email FROM Publishers WHERE publisher_name = ? ORDER BY publisher_name";
             PreparedStatement pstmt = conn.prepareStatement(stmt);
             pstmt.setString(1, publisher);
@@ -204,7 +216,7 @@ public class CECS323JavaTermProject {
                 return;
             }
             
-            //I can't get this to work
+           
             //Checking if the group name exists
             String checkStatement1 = "SELECT group_name FROM WritingGroups WHERE group_name = ?";
             PreparedStatement pstmt4 = conn.prepareStatement(checkStatement1);
@@ -268,6 +280,7 @@ public class CECS323JavaTermProject {
     
     public static void addPublisher(String publisherName, String publisherAddress, String publisherPhone, String publisherEmail, String publisherReplace){
         try{
+         
             String stmt = "INSERT INTO Publishers (publisher_name, publisher_address, publisher_phone, publisher_email) VALUES (?,?,?,?)";
             PreparedStatement pstmt = conn.prepareStatement(stmt);
             pstmt.setString(1, publisherName);
@@ -281,6 +294,25 @@ public class CECS323JavaTermProject {
             pstmt2.setString(1, publisherName);
             pstmt2.setString(2, publisherReplace);
             pstmt2.executeUpdate();
+            
+            //Removing a publisher
+            //Check if the publisher exists within the database
+            String checkStatement = "SELECT publisher_name FROM Publishers WHERE publisher_name = ?";
+            PreparedStatement pstmt1 = conn.prepareStatement(checkStatement);
+            pstmt1.setString(1, publisherReplace);
+            ResultSet rs1 = pstmt1.executeQuery();
+            if (rs1.next()) {
+                System.out.println("Removing publisher from the query");
+                String removeStatement = "DELETE FROM Publishers WHERE publisher_name = ?";
+                PreparedStatement removepstmt = conn.prepareStatement(removeStatement);
+                removepstmt.setString(1, publisherReplace);
+                removepstmt.executeUpdate();
+            }
+            else {
+                System.out.println("The publisher you are trying to remove does not exist. \nReturning to main menu");
+                return;
+            }
+            
             
             String stmt3 = "SELECT publisher_name, publisher_address, publisher_phone, publisher_email FROM Publishers WHERE publisher_name = ? ORDER BY publisher_name";
             PreparedStatement pstmt3 = conn.prepareStatement(stmt3);
@@ -484,7 +516,7 @@ public class CECS323JavaTermProject {
                         removeBook(groupName, bookTitle);
                         break;
                         }
-                   
+                    
                 }
             }
             //addBook("Write On", "bt", "HarperCollins", 1999, 420);
@@ -497,7 +529,11 @@ public class CECS323JavaTermProject {
         } catch (Exception e) {
             //Handle errors for Class.forName
             e.printStackTrace();
-        } finally {
+           
+        
+        }
+        
+        finally {
             try {
                 if (conn != null) {
                     conn.close();
