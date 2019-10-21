@@ -180,9 +180,19 @@ public class CECS323JavaTermProject {
         }
         
     }
-    
+    //We need to add checks into the addBook section
     public static void addBook(String groupName, String bookTitle, String publisherName, int yearPublished, int numPages){
         try{
+            String stmt0 = "SELECT book_title, group_name FROM Books WHERE book_title = ? AND group_name = ?";
+            PreparedStatement psmt0 = conn.prepareStatement(stmt0);
+            psmt0.setString(1, bookTitle);
+            psmt0.setString(2, groupName);
+            ResultSet rs0 = psmt0.executeQuery();
+            if (rs0.next()) {
+                System.out.println("This book and group name already exists!");
+                return;
+            }
+            
             String stmt = "INSERT INTO Books (group_name, book_title, publisher_name, year_published, number_pages) VALUES (?,?,?,?,?)";
             PreparedStatement pstmt = conn.prepareStatement(stmt);
             pstmt.setString(1, groupName);
@@ -197,6 +207,10 @@ public class CECS323JavaTermProject {
             pstmt2.setString(1, groupName);
             pstmt2.setString(2, bookTitle);
             ResultSet rs = pstmt2.executeQuery();
+//            if (rs.next()) {
+//                System.out.println("The group and book already exists");
+//                return;
+//            }
            
             String displayFormat="%-20s%-30s%-20s%-20s%-20s\n";
             System.out.printf(displayFormat, "Group Name", "Book Title", "Publisher Name", "Year Published", "Number of Pages");
@@ -262,6 +276,7 @@ public class CECS323JavaTermProject {
     
     public static void removeBook(String groupName, String bookTitle){
          try{
+            
             String stmt = "DELETE FROM Books WHERE group_name = ? AND book_title = ?";
             PreparedStatement pstmt = conn.prepareStatement(stmt);
             pstmt.setString(1, groupName);
