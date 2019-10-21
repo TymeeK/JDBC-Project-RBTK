@@ -30,18 +30,21 @@ public class CECS323JavaTermProject {
     
     public static void getAllWritingGroups(){
         try{
-            String stmt = "SELECT group_name FROM WritingGroups";
+            String stmt = "SELECT group_name, head_writer, year_formed, subject FROM WritingGroups ORDER BY group_name";
             PreparedStatement pstmt = conn.prepareStatement(stmt);
             ResultSet rs = pstmt.executeQuery();
             
-            String displayFormat="%-5s\n";
-            System.out.printf(displayFormat, "Group Name");
+            String displayFormat="%-20s%-20s%-20s%-20s\n";
+            System.out.printf(displayFormat, "Group Name", "Head Writer", "Year Formed", "Subject");
             while (rs.next()) {
                 //Retrieve by column name
                 String groupName = rs.getString("group_name");
+                String headWriter = rs.getString("head_writer");
+                String yearFormed = rs.getString("year_formed");
+                String subject = rs.getString("subject");
 
                 //Display values
-                System.out.printf(displayFormat, dispNull(groupName));
+                System.out.printf(displayFormat, dispNull(groupName), dispNull(headWriter), dispNull(yearFormed), dispNull(subject));
             }
             rs.close();
 
@@ -54,12 +57,12 @@ public class CECS323JavaTermProject {
     
     public static void getWritingGroup(String group){
         try{
-            String stmt = "SELECT group_name, head_writer, year_formed, subject FROM WritingGroups WHERE group_name = ?";
+            String stmt = "SELECT group_name, head_writer, year_formed, subject FROM WritingGroups WHERE group_name = ? ORDER BY group_name";
             PreparedStatement pstmt = conn.prepareStatement(stmt);
             pstmt.setString(1, group);
             ResultSet rs = pstmt.executeQuery();
          
-           String displayFormat="%-20s%-20s%-20s%-20s\n";
+            String displayFormat="%-20s%-20s%-20s%-20s\n";
             System.out.printf(displayFormat, "Group Name", "Head Writer", "Year Formed", "Subject");
             while (rs.next()) {
                 //Retrieve by column name
@@ -80,18 +83,21 @@ public class CECS323JavaTermProject {
     
     public static void getAllPublishers(){
          try{
-            String stmt = "SELECT publisher_name FROM Publishers";
+            String stmt = "SELECT publisher_name, publisher_address, publisher_phone, publisher_email FROM Publishers ORDER BY publisher_name";
             PreparedStatement pstmt = conn.prepareStatement(stmt);
             ResultSet rs = pstmt.executeQuery();
             
-            String displayFormat="%-5s\n";
-            System.out.printf(displayFormat, "Publisher Name");
+            String displayFormat="%-30s%-50s%-20s%-20s\n";
+            System.out.printf(displayFormat, "Publisher Name", "Publisher Address", "Publisher Phone", "Publisher Email");
             while (rs.next()) {
                 //Retrieve by column name
-                String publisherName = rs.getString("publisher_name");
+                String name = rs.getString("publisher_name");
+                String addr = rs.getString("publisher_address");
+                String phone = rs.getString("publisher_phone");
+                String email = rs.getString("publisher_email");
 
                 //Display values
-                System.out.printf(displayFormat, dispNull(publisherName));
+                System.out.printf(displayFormat, dispNull(name), dispNull(addr), dispNull(phone), dispNull(email));
             }
             rs.close();
 
@@ -103,12 +109,12 @@ public class CECS323JavaTermProject {
     
     public static void getPublisher(String publisher){
         try{
-            String stmt = "SELECT publisher_name, publisher_address, publisher_phone, publisher_email FROM Publishers WHERE publisher_name = ?";
+            String stmt = "SELECT publisher_name, publisher_address, publisher_phone, publisher_email FROM Publishers WHERE publisher_name = ? ORDER BY publisher_name";
             PreparedStatement pstmt = conn.prepareStatement(stmt);
             pstmt.setString(1, publisher);
             ResultSet rs = pstmt.executeQuery();
          
-            String displayFormat="%-20s%-40s%-20s%-20s\n";
+            String displayFormat="%-30s%-50s%-20s%-20s\n";
             System.out.printf(displayFormat, "Publisher Name", "Publisher Address", "Publisher Phone", "Publisher Email");
             while (rs.next()) {
                 //Retrieve by column name
@@ -130,18 +136,22 @@ public class CECS323JavaTermProject {
     
     public static void getAllBooks(){
         try{
-            String stmt = "SELECT book_title FROM Books";
+            String stmt = "SELECT group_name, book_title, publisher_name, year_published, number_pages FROM Books ORDER BY book_title";
             PreparedStatement pstmt = conn.prepareStatement(stmt);
             ResultSet rs = pstmt.executeQuery();
             
-            String displayFormat="%-5s\n";
-            System.out.printf(displayFormat, "Book Title");
+            String displayFormat="%-20s%-25s%-30s%-20s%-20s\n";
+            System.out.printf(displayFormat, "Group Name", "Book Title", "Publisher Name", "Year Published", "Number of Pages");
             while (rs.next()) {
                 //Retrieve by column name
-                String bookTitle = rs.getString("book_title");
+                String name = rs.getString("group_name");
+                String title = rs.getString("book_title");
+                String publisher = rs.getString("publisher_name");
+                String year = rs.getString("year_published");
+                String pages = rs.getString("number_pages");
 
                 //Display values
-                System.out.printf(displayFormat, dispNull(bookTitle));
+                System.out.printf(displayFormat, dispNull(name), dispNull(title), dispNull(publisher), dispNull(year), dispNull(pages));
             }
             rs.close();
 
@@ -154,13 +164,13 @@ public class CECS323JavaTermProject {
     
     public static void getBook(String groupName, String bookTitle){
         try{
-            String stmt = "SELECT group_name, book_title, publisher_name, year_published, number_pages FROM Books WHERE group_name = ? AND book_title = ?";
+            String stmt = "SELECT group_name, book_title, publisher_name, year_published, number_pages FROM Books WHERE group_name = ? AND book_title = ? ORDER BY book_title";
             PreparedStatement pstmt = conn.prepareStatement(stmt);
             pstmt.setString(1, groupName);
             pstmt.setString(2, bookTitle);
             ResultSet rs = pstmt.executeQuery();
          
-           String displayFormat="%-20s%-30s%-20s%-20s%-20s\n";
+            String displayFormat="%-20s%-25s%-30s%-20s%-20s\n";
             System.out.printf(displayFormat, "Group Name", "Book Title", "Publisher Name", "Year Published", "Number of Pages");
             while (rs.next()) {
                 //Retrieve by column name
@@ -225,7 +235,7 @@ public class CECS323JavaTermProject {
             pstmt.setInt(5, numPages);
             pstmt.executeUpdate();
          
-            String stmt2 = "SELECT group_name, book_title, publisher_name, year_published, number_pages FROM Books WHERE group_name = ? AND book_title = ?";
+            String stmt2 = "SELECT group_name, book_title, publisher_name, year_published, number_pages FROM Books WHERE group_name = ? AND book_title = ? ORDER BY book_title";
             PreparedStatement pstmt2 = conn.prepareStatement(stmt2);
             pstmt2.setString(1, groupName);
             pstmt2.setString(2, bookTitle);
@@ -235,7 +245,7 @@ public class CECS323JavaTermProject {
 //                return;
 //            }
            
-            String displayFormat="%-20s%-30s%-20s%-20s%-20s\n";
+            String displayFormat="%-20s%-25s%-30s%-20s%-20s\n";
             System.out.printf(displayFormat, "Group Name", "Book Title", "Publisher Name", "Year Published", "Number of Pages");
             while (rs.next()) {
                 //Retrieve by column name
@@ -272,12 +282,12 @@ public class CECS323JavaTermProject {
             pstmt2.setString(2, publisherReplace);
             pstmt2.executeUpdate();
             
-            String stmt3 = "SELECT publisher_name, publisher_address, publisher_phone, publisher_email FROM Publishers WHERE publisher_name = ?";
+            String stmt3 = "SELECT publisher_name, publisher_address, publisher_phone, publisher_email FROM Publishers WHERE publisher_name = ? ORDER BY publisher_name";
             PreparedStatement pstmt3 = conn.prepareStatement(stmt3);
             pstmt3.setString(1, publisherName);
             ResultSet rs = pstmt3.executeQuery();
            
-            String displayFormat="%-20s%-40s%-20s%-20s\n";
+            String displayFormat="%-30s%-50s%-20s%-20s\n";
             System.out.printf(displayFormat, "Publisher Name", "Publisher Address", "Publisher Phone", "Publisher Email");
             while (rs.next()) {
                 //Retrieve by column name
