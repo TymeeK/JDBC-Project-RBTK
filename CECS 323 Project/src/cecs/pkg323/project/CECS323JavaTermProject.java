@@ -276,6 +276,15 @@ public class CECS323JavaTermProject {
     
     public static void removeBook(String groupName, String bookTitle){
          try{
+            String checkStatement = "Select group_name, book_title FROM Books WHERE group_name = ? AND book_title = ?";
+            PreparedStatement psmt0 = conn.prepareStatement(checkStatement);
+            psmt0.setString(1, groupName);
+            psmt0.setString(2, bookTitle);
+            ResultSet rs = psmt0.executeQuery();
+            if (!rs.next()) {
+                System.out.println("This book does not exist! Returning to main menu");
+                return;
+            }
             
             String stmt = "DELETE FROM Books WHERE group_name = ? AND book_title = ?";
             PreparedStatement pstmt = conn.prepareStatement(stmt);
@@ -428,8 +437,17 @@ public class CECS323JavaTermProject {
                         System.out.println("What is the name of the book?");
                         in.nextLine();
                         String bookTitle = in.nextLine();
+                        while (bookTitle.isEmpty()) {
+                            System.out.println("Please enter a book title");
+                            bookTitle = in.nextLine();
+                        }
                         System.out.println("What is the name of the group?");
+                        
                         String groupName = in.nextLine();
+                        while (groupName.isEmpty()) {
+                            System.out.println("Please enter a group name");
+                            groupName = in.nextLine();
+                        }
                         removeBook(groupName, bookTitle);
                         break;
                         }
